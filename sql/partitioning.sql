@@ -123,6 +123,28 @@ BEGIN
     END LOOP; 
 END $$;
 
+-- 
+DO $$ 
+DECLARE
+    partition_name text;
+    index_statement text;
+BEGIN
+    FOR partition_name IN 
+        SELECT table_name FROM information_schema.tables WHERE table_name LIKE 'geonamespop_parent_%'
+    LOOP
+        index_statement := format(
+            'CREATE INDEX idx_%I_name ON %I (name)', 
+            partition_name, 
+            partition_name
+        );
+
+        -- Print the dynamically generated index statement to the log
+        RAISE NOTICE 'Dynamic Index Statement: %', index_statement;
+
+        -- Execute the dynamic index statement
+        EXECUTE index_statement;
+    END LOOP;
+END $$;
 
 -- Testing
 
