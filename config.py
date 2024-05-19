@@ -4,8 +4,8 @@
 dbname = "postgres"
 user = "postgres"
 password = "root"
-host = "localhost"
-port = "5432"
+host = "127.0.0.1"
+port = "5433"
 table_name = "geonames"
 
 # Path to the folder containing the zip files
